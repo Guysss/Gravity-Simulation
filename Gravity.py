@@ -1,4 +1,5 @@
 import pygame
+from time import sleep
 from random import randint
 from math import sqrt, atan2, sin, cos, pi 
 
@@ -10,6 +11,7 @@ HEIGHT = 900
 G = 1e-2 #G = 6.67428e-11
 OBJECTS_NUM = 10
 DENSITY = 20
+BOUNCE = True
 
 objects_list = []
 
@@ -106,8 +108,9 @@ def update_object(obj):
         if distance < obj.radius+obj_other.radius:
            on_collision(obj, obj_other)
 
+    #Bounce
+    if not BOUNCE: return
     
-    #Bounds
     if obj.position.x-obj.radius <= 0 and obj.velocity.x < 0:
         obj.velocity.x = -obj.velocity.x
     elif obj.position.x+obj.radius >= WIDTH and obj.velocity.x > 0:
@@ -126,7 +129,6 @@ def on_collision(obj1, obj2):
         objects_list.remove(obj2)
 
 #MAIN LOOP
-from time import sleep
 if __name__ == '__main__':
     running = True
 
